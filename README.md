@@ -2,6 +2,8 @@
 
 Konfiguracja terminala macOS z motywem JJK — niestandardowy prompt zsh, fastfetch z ASCII logo Apple i dwusekcyjnym layoutem specyfikacji.
 
+![Preview](assets/preview.png)
+
 ## Wymagania wstępne
 
 - **macOS** z domyślnym **Terminal.app**
