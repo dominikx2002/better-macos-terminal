@@ -44,6 +44,5 @@ config.jsonc          — fastfetch configuration
 launch.sh             — script that runs fetch (copied to ~/.config/fastfetch/)
 dotfiles/
   zshrc               — zsh configuration (symlinked as ~/.zshrc)
-images/               — optional custom logo images
 install.sh            — installer
 ```
