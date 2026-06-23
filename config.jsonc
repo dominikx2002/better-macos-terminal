@@ -1,0 +1,121 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "builtin",
+        "source": "macOS",
+        "color": {
+            "1": "38;5;245",
+            "2": "38;5;245",
+            "3": "38;5;245",
+            "4": "38;5;245",
+            "5": "38;5;245",
+            "6": "38;5;245"
+        }
+    },
+    "display": {
+        "separator": "  "
+    },
+    "modules": [
+        "break",
+        {
+            "type": "custom",
+            "format": "\u001b[97m   »  System Specs\u001b[0m"
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[38;5;208m╭─────────────────────────────────────────────────╮\u001b[0m"
+        },
+        {
+            "type": "command",
+            "key": "    Host   ",
+            "keyColor": "1;38;5;214",
+            "text": "system_profiler SPHardwareDataType 2>/dev/null | awk -F': ' '/Model Name/{print $2; exit}'"
+        },
+        {
+            "type": "display",
+            "key": "    Display",
+            "keyColor": "1;38;5;214",
+            "format": "{width}x{height}"
+        },
+        {
+            "type": "command",
+            "key": "    CPU    ",
+            "keyColor": "1;38;5;214",
+            "text": "sysctl -n machdep.cpu.brand_string | sed 's/(R)//g;s/(TM)//g;s/ CPU//g;s/  / /g'"
+        },
+        {
+            "type": "gpu",
+            "key": "    GPU    ",
+            "keyColor": "1;38;5;214",
+            "format": "{name}",
+            "detectionMethod": "auto"
+        },
+        {
+            "type": "memory",
+            "key": "    Memory ",
+            "keyColor": "1;38;5;214"
+        },
+        {
+            "type": "disk",
+            "key": "    Disk   ",
+            "keyColor": "1;38;5;214",
+            "format": "{1} / {2} ({3})",
+            "folders": "/"
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[38;5;208m╰─────────────────────────────────────────────────╯\u001b[0m"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "\u001b[97m   »  Software Specs\u001b[0m"
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[38;5;208m╭─────────────────────────────────────────────────╮\u001b[0m"
+        },
+        {
+            "type": "os",
+            "key": "    OS     ",
+            "keyColor": "1;38;5;214",
+            "format": "{name} {version}"
+        },
+        {
+            "type": "kernel",
+            "key": "    Kernel ",
+            "keyColor": "1;38;5;214"
+        },
+        {
+            "type": "wm",
+            "key": "    WM     ",
+            "keyColor": "1;38;5;214"
+        },
+        {
+            "type": "packages",
+            "key": "    Package",
+            "keyColor": "1;38;5;214"
+        },
+        {
+            "type": "uptime",
+            "key": "    Uptime ",
+            "keyColor": "1;38;5;214"
+        },
+        {
+            "type": "command",
+            "key": "    OS Age ",
+            "keyColor": "1;38;5;214",
+            "text": "b=$(stat -f %B / 2>/dev/null); [ -z \"$b\" ] || [ \"$b\" -eq 0 ] 2>/dev/null && b=$(stat -f %m /var/log/install.log 2>/dev/null); echo $(( ( $(date +%s) - ${b:-0} ) / 86400 )) days"
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[38;5;208m╰─────────────────────────────────────────────────╯\u001b[0m"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "\u001b[48;5;208m\u001b[0m\u001b[48;5;214m\u001b[0m\u001b[48;5;231m\u001b[0m\u001b[48;5;250m\u001b[0m \u001b[48;5;245m\u001b[0m\u001b[48;5;232m\u001b[0m"
+        },
+        "break"
+    ]
+}

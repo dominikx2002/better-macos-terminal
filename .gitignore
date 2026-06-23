@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+
+# Claude Code session data
+.claude/
+
+# Personal images (dodaj własne do images/, nie będą commitowane)
+images/*.png
+images/*.jpg
+images/*.jpeg
+images/*.webp
+images/*.gif

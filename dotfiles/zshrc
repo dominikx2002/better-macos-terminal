@@ -1,0 +1,42 @@
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_all_dups hist_ignore_space share_history
+
+# Shell
+setopt autocd interactivecomments nonomatch promptsubst
+
+# Autofill
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Git in prompt
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats ' %b'
+
+# Kali start
+PROMPT_EOL_MARK=''
+prompt_symbol=@
+PROMPT=$'\n%F{208}╭──%B%F{214}%n%b%F{231}'$prompt_symbol$'%B%F{214}%m%b %B%F{33}%(6~.%-1~/…/%4~.%5~)%b %F{yellow}${vcs_info_msg_0_}%F{208}\n╰─%B%F{231}$%b%F{reset} '
+
+# Aliases
+alias ls='ls -GF'
+alias ll='ls -lGF'
+alias la='ls -laGF'
+alias grep='grep --color=auto'
+
+# Extensions
+[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+  source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
+  source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# Autostart fastfetch — tylko w interaktywnej powłoce podłączonej do TTY
+if [[ -o interactive ]] && [[ -t 1 ]] && [[ -x "$HOME/.config/fastfetch/launch.sh" ]]; then
+  "$HOME/.config/fastfetch/launch.sh"
+fi
