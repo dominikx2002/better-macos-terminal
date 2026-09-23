@@ -9,7 +9,9 @@ macOS terminal setup with a JJK theme — custom zsh prompt, fastfetch with ASCI
 ## Prerequisites
 
 - **macOS** with the default **Terminal.app**
-- **Homebrew** — https://brew.sh (the installer will check for it)
+- **A package manager** — the installer picks one automatically:
+  - **Intel Mac → [MacPorts](https://www.macports.org/install.php)** (recommended). Since Homebrew 7.0 Intel is Tier 3: no new bottles, support ends in September 2027. Install `xcode-select --install`, then the `.pkg` for your macOS version (e.g. *Sequoia*).
+  - **Apple Silicon → [Homebrew](https://brew.sh)**
 - **Nerd Font set manually** in Terminal.app after installation:
   `Terminal → Settings → Profiles → Font → Hack Nerd Font`
 
@@ -18,13 +20,15 @@ macOS terminal setup with a JJK theme — custom zsh prompt, fastfetch with ASCI
 ```bash
 git clone https://github.com/dominikx2002/better-macos-terminal.git
 cd better-macos-terminal
-./install.sh
+./install.sh              # auto-detect
+./install.sh --macports   # force MacPorts
+./install.sh --brew       # force Homebrew
 ```
 
 The script handles everything automatically:
 
-1. Checks for Homebrew (exits with a message if missing)
-2. Installs via brew: `fastfetch`, `chafa`, `imagemagick`, `zsh-autosuggestions`, `zsh-syntax-highlighting`, `font-hack-nerd-font`
+1. Detects the package manager: Homebrew on Apple Silicon, MacPorts otherwise (exits with instructions if neither is installed)
+2. Installs `fastfetch`, `zsh-autosuggestions`, `zsh-syntax-highlighting` and **Hack Nerd Font** (Homebrew cask, or downloaded from [nerd-fonts](https://github.com/ryanoasis/nerd-fonts) into `~/Library/Fonts` when using MacPorts — MacPorts will ask for your `sudo` password)
 3. Copies `config.jsonc` and `launch.sh` to `~/.config/fastfetch/`
 4. **Backs up** your current `~/.zshrc` → `~/.zshrc.backup.YYYYMMDDHHMMSS` (never overwrites without a backup)
 5. Creates a symlink `~/.zshrc → <repo>/dotfiles/zshrc`
