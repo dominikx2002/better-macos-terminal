@@ -1,3 +1,11 @@
+# Package managers — MacPorts (/opt/local), Homebrew (Apple Silicon: /opt/homebrew, Intel: /usr/local)
+[[ -d /opt/local/bin ]] && export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="$HOME/.local/bin:$PATH"
+typeset -U path fpath  # usuń duplikaty
+# Podpowiedzi (completions) z pakietów MacPorts
+[[ -d /opt/local/share/zsh/site-functions ]] && fpath=(/opt/local/share/zsh/site-functions $fpath)
+
 # History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
@@ -28,13 +36,17 @@ alias ll='ls -lGF'
 alias la='ls -laGF'
 alias grep='grep --color=auto'
 
-# Extensions
-[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
-  source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-[ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
-  source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-export PATH="$HOME/.local/bin:$PATH"
+# Extensions — szuka wtyczek we wszystkich prefiksach (bez wywoływania `brew --prefix`)
+_plugin_prefixes=(/opt/local /opt/homebrew /usr/local)
+_source_plugin() {
+  local p
+  for p in $_plugin_prefixes; do
+    [[ -f "$p/share/$1/$1.zsh" ]] && { source "$p/share/$1/$1.zsh"; return; }
+  done
+}
+_source_plugin zsh-autosuggestions
+_source_plugin zsh-syntax-highlighting  # musi być ładowany jako ostatni
+unset _plugin_prefixes; unfunction _source_plugin
 
 # Autostart fastfetch — tylko w interaktywnej powłoce podłączonej do TTY
 if [[ -o interactive ]] && [[ -t 1 ]] && [[ -x "$HOME/.config/fastfetch/launch.sh" ]]; then
